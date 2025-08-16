@@ -22,6 +22,10 @@ const userSchema = new EntitySchema({
       unique: true,
       nullable: false,
     },
+    password: {            
+      type: "varchar",
+      nullable: false,
+    },
     age: {
       type: "int",
     },

@@ -18,6 +18,7 @@ class userService {
       if (existingUser) {
         throw new Error("Email allaqachon ro'yxatdan o'tgan");
       }
+      userData.password = await this.bcrypt.hash(userData.password, 10);
       const newUser = this.userRepository.create(userData);
       const saveUser = await this.userRepository.save(newUser);
       const token = this.jwt.generatToken(saveUser.id);
