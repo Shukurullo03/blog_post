@@ -9,28 +9,6 @@ class userService {
     this.bcrypt = bcrypt;
     this.userRepository = dataSource.getRepository("User");
   }
-  async registerUsers(userData) {
-    try {
-      await this.Joi.validateUserData(userData);
-      const existingUser = await this.userRepository.findOneBy({
-        email: userData.email,
-      });
-      if (existingUser) {
-        throw new Error("Email allaqachon ro'yxatdan o'tgan");
-      }
-      userData.password = await this.bcrypt.hash(userData.password, 10);
-      userData.role = userData.role || "user";
-      const newUser = this.userRepository.create(userData);
-      const saveUser = await this.userRepository.save(newUser);
-      const token = this.jwt.generatToken(saveUser);
-      return {
-        user: saveUser,
-        token: token,
-      };
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  }
   async getAllUser() {
     try {
       const users = await this.userRepository.find();
@@ -39,49 +17,54 @@ class userService {
       throw new Error("Foydalanuvchi olishda xatolik");
     }
   }
-  async userId(Id) {
-    try {
-      const user = await this.userRepository.findOne({
-        where: { id: Id },
-      });
-      if (!user) {
-        throw new Error("Foydalanuvchi topilmadi");
-      }
-      return user;
-    } catch (error) {
-      throw new Error("Foydalanuvchi topishda xatolik sodir boldi");
+async userId(id) {
+  try {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+    if (!user) {
+      throw new Error("Foydalanuvchi topilmadi");
     }
+    return user;
+  } catch (error) {
+    throw new Error(error.message); 
   }
-  async updateUser(Id, updateData) {
-    try {
-      const user = await this.userRepository.findOne({
-        where: { id: Id },
-      });
-      if (!user) {
-        return null;
-      }
+}
+
+async updateUser(id, updateData) {
+  try {
+    const user = await this.userRepository.findOne({ where: { id } });
+
+    if (!user) {
+      return null;
+    }
+
+    if (updateData.password) {
       updateData.password = await this.bcrypt.hash(updateData.password, 10);
-      Object.assign(user, updateData);
-      return await this.userRepository.save(user);
-    } catch (error) {
-      console.error("Update error:", error.message);
     }
+
+    Object.assign(user, updateData);
+    return await this.userRepository.save(user);
+
+  } catch (error) {
+    console.error("Update error:", error.message);
+    throw new Error("Foydalanuvchini yangilashda xatolik");
   }
-  async deleteUser(id) {
-    try {
-      const user = await this.userRepository.findOne({ where: { id } });
+}
+async deleteUser(id) {
+  try {
+    const user = await this.userRepository.findOne({ where: { id } });
 
-      if (!user) {
-        throw new Error("Foydalanuvchi topilmadi");
-      }
-
-      await this.userRepository.remove(user);
-
-      return { message: "Foydalanuvchi muvaffaqiyatli o'chirildi" };
-    } catch (error) {
-      console.error("Delete error:", error.message);
-      throw new Error("Foydalanuvchini o'chirishda xatolik");
+    if (!user) {
+      throw new Error("Foydalanuvchi topilmadi");
     }
+    await this.userRepository.remove(user);
+
+    return { message: "Foydalanuvchi muvaffaqiyatli o‘chirildi" };
+  } catch (error) {
+    console.error("Delete error:", error.message);
+    throw new Error(error.message || "Foydalanuvchini o‘chirishda xatolik");
   }
+}
 }
 export default userService;

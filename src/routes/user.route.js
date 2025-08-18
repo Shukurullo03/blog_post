@@ -3,9 +3,6 @@ import userController from "../controller/user.controller.js";
 import { authMiddleware } from "../middlewares/auth.js";
 const userRouter = Router();
 const controller = new userController();
-userRouter.post("/users", (req, res) =>
-  controller.registerUsersController(req, res)
-);
 userRouter.get("/users",authMiddleware(["admin"]),(req, res) =>
   controller.getAllUserController(req, res)
 );

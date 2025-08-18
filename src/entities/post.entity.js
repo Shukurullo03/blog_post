@@ -33,8 +33,11 @@ relations: {
   user: {
     target: "User",
     type: "many-to-one",
-    joinColumn: { name: "userId" },
+    joinColumn: {
+      name: "userId",
+    },
     nullable: false,
+    onDelete: "CASCADE", 
   },
   comments: {
     target: "Comment",
