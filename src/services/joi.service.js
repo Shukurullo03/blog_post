@@ -10,6 +10,7 @@ class JoiService {
       email: this.Joi.string().min(5).max(32).required(),
       age: this.Joi.number().integer().min(1).max(100).required(),
       password: this.Joi.string().min(8).max(32).required(),
+       role: Joi.string().valid("user", "admin").default("user"), 
     });
     await payload.validateAsync(data);
   }

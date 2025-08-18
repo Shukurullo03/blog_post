@@ -16,6 +16,14 @@ const postSchema = new EntitySchema({
     content: {
       type: "text",
     },
+        likes: {
+      type: "int",
+      default: 0,
+    },
+    views: {
+      type: "int",
+      default: 0,
+    },
     createdAt: {
       type: "timestamp",
       default: () => "CURRENT_TIMESTAMP",

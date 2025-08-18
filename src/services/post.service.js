@@ -4,6 +4,7 @@ class PostService {
   constructor() {
     this.postRepository = dataSource.getRepository("Post");
     this.userRepository = dataSource.getRepository("User");
+    
   }
 
   async createPost({ title, content, userId }) {
@@ -71,6 +72,20 @@ class PostService {
 
     await this.postRepository.remove(post);
     return true;
+  }
+   async incrementLikes(postId) {
+    const post = await postRepo.findOneBy({ id: postId });
+    if (!post) return null;
+
+    post.likes += 1;
+    return await postRepo.save(post);
+  }
+  async incrementViews(postId) {
+    const post = await postRepo.findOneBy({ id: postId });
+    if (!post) return null;
+
+    post.views += 1;
+    return await postRepo.save(post);
   }
 }
 

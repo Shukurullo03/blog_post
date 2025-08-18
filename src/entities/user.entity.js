@@ -26,6 +26,10 @@ const userSchema = new EntitySchema({
       type: "varchar",
       nullable: false,
     },
+     role: {            
+      type: "varchar",
+      default: "user",  
+    },
     age: {
       type: "int",
     },
@@ -44,3 +48,4 @@ const userSchema = new EntitySchema({
 });
 
 export default userSchema;
+

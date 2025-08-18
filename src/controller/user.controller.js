@@ -44,25 +44,42 @@ class userController {
       });
     }
   }
-  async updateUserController(req, res) {
-    const { Id } = parseInt(req.params);
+async updateUserController(req, res) {
+  try {
+    const id = parseInt(req.params.id);
+
+    if (req.user.id !== id && req.user.role !== "admin") {
+      return res.status(403).json({ message: "Ruxsat yo‘q" });
+    }
+
     const updateData = req.body;
-    const userUpdate = await this.userService.updateUser(Id, updateData);
+    const userUpdate = await this.userService.updateUser(id, updateData);
+
     res.status(200).json({
       status: "success",
       message: "Foydalanuvchi muvaffaqiyatli yangilandi",
       user: userUpdate,
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-  async deleteUserController(req, res) {
-    try {
-        const { id } = req.params; 
-        const result = await this.userService.deleteUser(id);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
 }
+
+async deleteUserController(req, res) {
+  try {
+    const id = parseInt(req.params.id);
+
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Faqat admin o‘chira oladi" });
+    }
+
+    const result = await this.userService.deleteUser(id);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}
+
 
 }
 export default userController;

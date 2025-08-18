@@ -19,9 +19,10 @@ class userService {
         throw new Error("Email allaqachon ro'yxatdan o'tgan");
       }
       userData.password = await this.bcrypt.hash(userData.password, 10);
+      userData.role = userData.role || "user";
       const newUser = this.userRepository.create(userData);
       const saveUser = await this.userRepository.save(newUser);
-      const token = this.jwt.generatToken(saveUser.id);
+      const token = this.jwt.generatToken(saveUser);
       return {
         user: saveUser,
         token: token,
@@ -59,6 +60,7 @@ class userService {
       if (!user) {
         return null;
       }
+      updateData.password = await this.bcrypt.hash(updateData.password, 10);
       Object.assign(user, updateData);
       return await this.userRepository.save(user);
     } catch (error) {
@@ -73,7 +75,7 @@ class userService {
         throw new Error("Foydalanuvchi topilmadi");
       }
 
-      await this.userRepository.remove(user); 
+      await this.userRepository.remove(user);
 
       return { message: "Foydalanuvchi muvaffaqiyatli o'chirildi" };
     } catch (error) {

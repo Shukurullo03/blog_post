@@ -4,8 +4,8 @@ class JwtService {
     this.jwt = jwt;
     this.SECRET_KEY = process.env.JWT_SECRET;
   }
-  generatToken(userId) {
-    const token = this.jwt.sign({ user_id: userId }, this.SECRET_KEY, {
+  generatToken(user) {
+    const token = this.jwt.sign({ id: user.id, role: user.role }, this.SECRET_KEY, {
       expiresIn: "24h",
     });
     return token;
