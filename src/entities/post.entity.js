@@ -29,16 +29,19 @@ const postSchema = new EntitySchema({
       default: () => "CURRENT_TIMESTAMP",
     },
   },
-  relations: {
-    user: {
-      target: "User",
-      type: "many-to-one",
-      joinColumn: {
-        name: "userId",
-      },
-      nullable: false,
-    },
+relations: {
+  user: {
+    target: "User",
+    type: "many-to-one",
+    joinColumn: { name: "userId" },
+    nullable: false,
   },
+  comments: {
+    target: "Comment",
+    type: "one-to-many",
+    inverseSide: "post",
+  },
+},
 });
 
 export default postSchema;

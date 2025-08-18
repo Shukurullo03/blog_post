@@ -38,13 +38,19 @@ const userSchema = new EntitySchema({
       default: () => "CURRENT_TIMESTAMP",
     },
   },
-  relations: {
-    posts: {
-      target: "Post",
-      type: "one-to-many",
-      inverseSide: "user",
-    },
+relations: {
+  posts: {
+    target: "Post",
+    type: "one-to-many",
+    inverseSide: "user",
   },
+  comments: {
+    target: "Comment",
+    type: "one-to-many",
+    inverseSide: "user",
+  },
+},
+
 });
 
 export default userSchema;

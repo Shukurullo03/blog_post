@@ -3,6 +3,7 @@ import "dotenv/config";
 import { DataSource } from "typeorm";
 import userSchema from "../entities/user.entity.js";
 import postSchema from "../entities/post.entity.js";
+import commentSchema from "../entities/comment.entity.js";
 
 const database = new DataSource({
   type: "postgres",
@@ -12,7 +13,7 @@ const database = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   synchronize: true, 
-  entities: [userSchema, postSchema],
+  entities: [userSchema, postSchema,commentSchema],
 });
 
 export const dataSource = await database.initialize()
