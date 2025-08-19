@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import JwtService from "./jwt.service.js";
 import JoiService from "./joi.service.js";
 import { dataSource } from "../config/database.js";
