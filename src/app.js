@@ -9,6 +9,9 @@ app.use(cors());
 app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(router);
+app.get("/", (req, res) => {
+  res.send("Blog Post API is running 🚀");
+});
 const PORT = process.env.PORT;
 const initApp = async () => {
   try {
