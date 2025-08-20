@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 const app = express();
 app.use(cors({
-  origin: "http://localhost:4000", 
+  origin: "https://blog-post-01dw.onrender.com", 
   credentials: true
 }));
 app.use(express.json());
