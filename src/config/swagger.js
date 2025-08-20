@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:4000",
+        url: "https://blog-post-01dw.onrender.com",
       },
     ],
     components: {
