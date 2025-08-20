@@ -38,7 +38,7 @@ const controller = new PostController();
  *       201:
  *         description: Post yaratildi
  */
-postRouter.post("/posts", authMiddleware(["user", "admin"]), (req, res) =>
+postRouter.post("/", authMiddleware(["user", "admin"]), (req, res) =>
   controller.createPost(req, res)
 );
 
@@ -52,7 +52,7 @@ postRouter.post("/posts", authMiddleware(["user", "admin"]), (req, res) =>
  *       200:
  *         description: Postlar ro‘yxati
  */
-postRouter.get("/posts", (req, res) =>
+postRouter.get("/", (req, res) =>
   controller.getAllPosts(req, res)
 );
 
@@ -73,7 +73,7 @@ postRouter.get("/posts", (req, res) =>
  *       200:
  *         description: Post ma'lumotlari
  */
-postRouter.get("/posts/:id", (req, res) =>
+postRouter.get("/:id", (req, res) =>
   controller.getPostById(req, res)
 );
 
@@ -107,7 +107,7 @@ postRouter.get("/posts/:id", (req, res) =>
  *       200:
  *         description: Post yangilandi
  */
-postRouter.put("/posts/:id", authMiddleware(["user", "admin"]), (req, res) =>
+postRouter.put("/:id", authMiddleware(["user", "admin"]), (req, res) =>
   controller.updatePost(req, res)
 );
 
@@ -130,7 +130,7 @@ postRouter.put("/posts/:id", authMiddleware(["user", "admin"]), (req, res) =>
  *       200:
  *         description: Post o‘chirildi
  */
-postRouter.delete("/posts/:id", authMiddleware(["user", "admin"]), (req, res) =>
+postRouter.delete("/:id", authMiddleware(["user", "admin"]), (req, res) =>
   controller.deletePost(req, res)
 );
 
@@ -151,7 +151,7 @@ postRouter.delete("/posts/:id", authMiddleware(["user", "admin"]), (req, res) =>
  *       200:
  *         description: Like qo‘shildi
  */
-postRouter.post("/posts/:id/like", (req, res) =>
+postRouter.post("/:id/like", (req, res) =>
   controller.likePost(req, res)
 );
 
@@ -172,7 +172,7 @@ postRouter.post("/posts/:id/like", (req, res) =>
  *       200:
  *         description: Ko‘rilganlar soni oshirildi
  */
-postRouter.post("/posts/:id/view", (req, res) =>
+postRouter.post("/:id/view", (req, res) =>
   controller.viewPost(req, res)
 );
 
