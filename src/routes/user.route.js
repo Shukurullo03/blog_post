@@ -24,7 +24,7 @@ const controller = new userController();
  *       200:
  *         description: Foydalanuvchilar ro'yxati
  */
-userRouter.get("/users", authMiddleware(["admin"]), (req, res) =>
+userRouter.get("/", authMiddleware(["admin"]), (req, res) =>
   controller.getAllUserController(req, res)
 );
 
@@ -47,7 +47,7 @@ userRouter.get("/users", authMiddleware(["admin"]), (req, res) =>
  *       200:
  *         description: Foydalanuvchi ma'lumotlari
  */
-userRouter.get("/users/:id", authMiddleware(["admin", "user"]), (req, res) =>
+userRouter.get("/:id", authMiddleware(["admin", "user"]), (req, res) =>
   controller.userIdController(req, res)
 );
 
@@ -87,7 +87,7 @@ userRouter.get("/users/:id", authMiddleware(["admin", "user"]), (req, res) =>
  *       200:
  *         description: Foydalanuvchi yangilandi
  */
-userRouter.put("/users/:id", authMiddleware(["admin", "user"]), (req, res) =>
+userRouter.put("/:id", authMiddleware(["admin", "user"]), (req, res) =>
   controller.updateUserController(req, res)
 );
 
@@ -110,7 +110,7 @@ userRouter.put("/users/:id", authMiddleware(["admin", "user"]), (req, res) =>
  *       200:
  *         description: Foydalanuvchi o‘chirildi
  */
-userRouter.delete("/users/:id", authMiddleware(["admin"]), (req, res) =>
+userRouter.delete("/:id", authMiddleware(["admin"]), (req, res) =>
   controller.deleteUserController(req, res)
 );
 
