@@ -7,8 +7,8 @@ export default class CommentService {
   }
 
   async create({ postId, userId, content }) {
-    const post = await this.postRepo.findOne({ where: { id: postId } });
-    const user = await this.userRepo.findOne({ where: { id: userId } });
+    const post = await this.postRepo.findOne({ where: { id: Number(postId) } });
+    const user = await this.userRepo.findOne({ where: { id:  Number(userId) } });
 
     if (!post || !user) return null;
 
