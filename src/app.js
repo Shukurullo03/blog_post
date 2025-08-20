@@ -12,7 +12,11 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  swaggerOptions: {
+    withCredentials: true
+  }
+}));
 app.use(router);
 const PORT = process.env.PORT;
 const initApp = async () => {
