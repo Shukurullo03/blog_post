@@ -31,7 +31,9 @@ const controller = new PostController();
  *                 type: string
  *               content:
  *                 type: string
- *               userId:number
+ *               userId:
+ *                 type: number
+
  *     responses:
  *       201:
  *         description: Post yaratildi
