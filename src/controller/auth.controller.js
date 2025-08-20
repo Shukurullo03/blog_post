@@ -17,9 +17,14 @@ import AuthService from "../services/auth.service.js";
   async login(req, res) {
     try {
       const token = await this.authService.login(req.body);
-      res.status(200).json({ accessToken: token });
+      res.cookie('token',token,{
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Strict', 
+         maxAge: 24 * 60 * 60 * 1000
+      })
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(401).json({ message: error.message });
     }
   }
 }

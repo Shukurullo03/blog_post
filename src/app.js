@@ -3,10 +3,15 @@ import swaggerSpec from "./config/swagger.js";
 import router from "./routes/index.routes.js";
 import cors from "cors";
 import express from "express";
+import cookieParser from "cookie-parser";
 import "dotenv/config";
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:4000", 
+  credentials: true
+}));
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(router);
 const PORT = process.env.PORT;
@@ -22,13 +27,3 @@ const initApp = async () => {
   }
 };
 initApp();
-// AppDataSource.initialize()
-//   .then(() => {
-//     console.log("📦 Database connected successfully");
-//     app.listen(PORT, () => {
-//       console.log(`🚀 Server running on port ${PORT}`);
-//     });
-//   })
-//   .catch((err) => {
-//     console.error("❌ Database connection error:", err);
-//   });
